@@ -11,7 +11,7 @@ function ActivityCard(props) {
                 <p>Category: {category}</p>
                 <img src={imageUrl} alt={name}/>
             </div> */}
-            <Card style={{ width: '18rem' }}>
+            <Card style={{ width: '18rem' }} border='secondary'>
                 <Card.Header as='h3'>{name}</Card.Header>
                 <Card.Img variant="top" src={imageUrl} />
                 <Card.Body>

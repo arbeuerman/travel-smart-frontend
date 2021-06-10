@@ -1,7 +1,11 @@
+import Navbar from 'react-bootstrap/Navbar'
+
 function Header() {
     return (
         <div>
-            <h1>Header</h1>
+            <Navbar>
+                <h1>Header</h1>
+            </Navbar>
         </div>
     )
 }

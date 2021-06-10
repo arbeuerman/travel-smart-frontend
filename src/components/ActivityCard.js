@@ -4,13 +4,7 @@ import Button from 'react-bootstrap/Button'
 function ActivityCard(props) {
     const { name, location, imageUrl, category } = props.activity
     return (
-        <div >
-            {/* <div className='card-body'>
-                <h3 className='card-title'>{name}</h3> 
-                <p>Location: {location}</p>
-                <p>Category: {category}</p>
-                <img src={imageUrl} alt={name}/>
-            </div> */}
+        <div style={{marginBottom: '15px'}}>
             <Card style={{ width: '18rem' }} border='secondary'>
                 <Card.Header as='h3'>{name}</Card.Header>
                 <Card.Img variant="top" src={imageUrl} />

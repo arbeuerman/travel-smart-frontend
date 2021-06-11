@@ -3,6 +3,7 @@ import { Component } from 'react';
 import ActivityContainer from './components/ActivityContainer';
 import Header from './components/Header';
 import SearchBar from './components/SearchBar'
+import { Route } from 'react-router-dom'
 
 const activitiesUrl = 'http://localhost:3000/activities'
 
@@ -32,7 +33,7 @@ class App extends Component {
   render(){
     return (
       <div className="App">
-        <Header /> 
+        <Header getAllActivities={this.getAllActivities}/> 
         <SearchBar handleSearch={this.handleSearch}/>
         <ActivityContainer activities={this.state.activities}/>
       </div>

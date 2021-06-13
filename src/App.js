@@ -16,6 +16,11 @@ const headers_with_auth = {
   Authorization: ''
 }
 
+const headers = {
+  'Content-Type': 'application/json',
+  Accepts: 'application/json'
+}
+
 class App extends Component {
 
   state = {
@@ -40,8 +45,14 @@ class App extends Component {
   }
 
   signNewUserUp = (user) => {
-    console.log(user)
-    fetch()
+    // console.log(user)
+    fetch(usersUrl, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify(user)
+    })
+    .then(res => res.json())
+    .then(console.log)
   }
 
   render(){

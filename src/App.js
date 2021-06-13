@@ -11,6 +11,7 @@ import {BrowserRouter as Router} from 'react-router-dom'
 
 const activitiesUrl = 'http://localhost:3000/activities'
 const usersUrl = 'http://localhost:3000/users'
+const loginUrl = 'http://localhost:3000/login'
 
 const headers_with_auth = {
   Authorization: ''
@@ -25,7 +26,8 @@ class App extends Component {
 
   state = {
     activities: [],
-    searchText: ''
+    searchText: '',
+    token: {}
   }
 
   componentDidMount() {
@@ -46,13 +48,40 @@ class App extends Component {
 
   signNewUserUp = (user) => {
     // console.log(user)
+    const newUser = {
+      user
+    }
+    // console.log(newUser)
     fetch(usersUrl, {
       method: 'POST',
       headers,
-      body: JSON.stringify(user)
+      body: JSON.stringify(newUser)
     })
     .then(res => res.json())
     .then(console.log)
+  }
+  
+  login = (user) => {
+    const currentUser = {
+      user
+    }
+    fetch(loginUrl, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify(currentUser)
+    })
+    .then(res => res.json())
+    .then(response => {
+      if(response.token)
+      { 
+        this.setState({token: response.token})
+      } else if(response.message) 
+      {
+        alert(response.message)
+      } else {
+        console.error(response)
+      }
+    })
   }
 
   render(){
@@ -61,7 +90,7 @@ class App extends Component {
         <Header getAllActivities={this.getAllActivities}/> 
         <SearchBar handleSearch={this.handleSearch}/>
         <ActivityContainer activities={this.state.activities}/>
-        <Login />
+        <Login login={this.login}/>
         <Signup signUpUser={this.signNewUserUp}/>
         {/* <Router>
           <Route path='/login' render={(routerProps) => <Login {...routerProps} />} />

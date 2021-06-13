@@ -12,17 +12,18 @@ export default class Signup extends Component {
     }
 
     handleInput = (event) => {
-        // console.log('handling input')
-        // console.log(event.target.name)
         this.setState({
             [event.target.name]: event.target.value
         })
-
     }
 
     handleSubmit = (event) => {
         event.preventDefault();
         this.props.signUpUser(this.state)
+        this.setState({
+            username: '',
+            password: ''
+        })
     }
 
     render() {

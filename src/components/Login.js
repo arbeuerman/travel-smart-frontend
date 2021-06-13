@@ -12,7 +12,17 @@ class Login extends Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-        debugger
+        this.props.login(this.state)
+        this.setState({
+            username: '',
+            password: ''
+        })
+    }
+
+    handleInput = (event) => {
+        this.setState({
+            [event.target.name]: event.target.value
+        })
     }
 
     render(){
@@ -22,11 +32,23 @@ class Login extends Component {
                     <h3>Log In</h3>
                     <Form.Group>
                         <Form.Label>Username</Form.Label>
-                        <Form.Control type="username" placeholder="Enter username" />
+                        <Form.Control 
+                            type="username" 
+                            name="username" 
+                            placeholder="Enter username"
+                            value={this.state.username}
+                            onChange={this.handleInput} 
+                        />
                     </Form.Group>
                     <Form.Group>
                         <Form.Label>Password</Form.Label>
-                        <Form.Control type="password" placeholder="Password" />
+                        <Form.Control 
+                            type="password" 
+                            name="password" 
+                            placeholder="Password"
+                            value={this.state.password}
+                            onChange={this.handleInput} 
+                        />
                     </Form.Group>
                     <Button variant="primary" type="submit">
                         Submit

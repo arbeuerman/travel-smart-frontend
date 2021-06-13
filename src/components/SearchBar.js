@@ -21,7 +21,7 @@ class SearchBar extends Component{
                 <Form as='form' noValidate inline onSubmit={this.handleSubmit}>
                     <FormControl 
                         type="text" 
-                        placeholder="Search" 
+                        placeholder="Search by activity type" 
                         className="mr-sm-2" 
                         value={this.state.searchText}
                         onChange={(event) => {this.setState({searchText: event.target.value})}}

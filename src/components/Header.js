@@ -21,6 +21,7 @@ function Header(props) {
                             <NavDropdown.Divider />
                             <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
                         </NavDropdown> */}
+                        <Nav.Link href="#login" to='/login'>Login</Nav.Link>
                         </Nav>
                     {/* <Form inline>
                         <FormControl type="text" placeholder="Search" className="mr-sm-2" />

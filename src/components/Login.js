@@ -1,0 +1,44 @@
+import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/Button'
+import Nav from 'react-bootstrap/Nav'
+import React, {Component} from 'react'
+
+class Login extends Component {
+
+    state = {
+        username: '',
+        password: ''
+    }
+
+    handleSubmit = (event) => {
+        event.preventDefault();
+        debugger
+    }
+
+    render(){
+        return(
+            <div style={{margin: '15px'}}>
+                <Form onSubmit={this.handleSubmit}>
+                    <h3>Log In</h3>
+                    <Form.Group>
+                        <Form.Label>Username</Form.Label>
+                        <Form.Control type="username" placeholder="Enter username" />
+                    </Form.Group>
+                    <Form.Group>
+                        <Form.Label>Password</Form.Label>
+                        <Form.Control type="password" placeholder="Password" />
+                    </Form.Group>
+                    <Button variant="primary" type="submit">
+                        Submit
+                    </Button>
+                    <p className='forgot-password text-right'> 
+                        Don't have an account? 
+                        <Nav.Link href="#signup" to='/signup'>Sign up</Nav.Link>
+                    </p>
+                </Form>
+            </div>
+        )
+    }
+}
+
+export default Login;

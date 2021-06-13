@@ -4,8 +4,17 @@ import ActivityContainer from './components/ActivityContainer';
 import Header from './components/Header';
 import SearchBar from './components/SearchBar'
 import { Route } from 'react-router-dom'
+import Login from './components/Login'
+import Signup from './components/Signup'
+import {BrowserRouter as Router} from 'react-router-dom'
+
 
 const activitiesUrl = 'http://localhost:3000/activities'
+const usersUrl = 'http://localhost:3000/users'
+
+const headers_with_auth = {
+  Authorization: ''
+}
 
 class App extends Component {
 
@@ -30,12 +39,25 @@ class App extends Component {
     this.setState({activities: filteredActivities})
   }
 
+  signNewUserUp = (user) => {
+    console.log(user)
+    fetch()
+  }
+
   render(){
     return (
       <div className="App">
         <Header getAllActivities={this.getAllActivities}/> 
         <SearchBar handleSearch={this.handleSearch}/>
         <ActivityContainer activities={this.state.activities}/>
+        <Login />
+        <Signup signUpUser={this.signNewUserUp}/>
+        {/* <Router>
+          <Route path='/login' render={(routerProps) => <Login {...routerProps} />} />
+        </Router> */}
+        {/* <Router>
+          <Route path='/signup' render={(routerProps) => <Signup {...routerProps} />} />
+        </Router> */}
       </div>
     );
   }

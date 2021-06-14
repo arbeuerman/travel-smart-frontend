@@ -16,8 +16,9 @@ class SearchBar extends Component{
     }
 
     render(){
+        
         return (
-            <div style={{marginLeft: '15px'}}>
+            <div style={{marginBottom: '15px'}}>
                 <Form as='form' noValidate inline onSubmit={this.handleSubmit}>
                     <FormControl 
                         type="text" 

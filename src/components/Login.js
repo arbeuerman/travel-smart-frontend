@@ -26,6 +26,7 @@ class Login extends Component {
     }
 
     render(){
+        console.log('in login')
         return(
             <div style={{margin: '15px'}}>
                 <Form onSubmit={this.handleSubmit}>

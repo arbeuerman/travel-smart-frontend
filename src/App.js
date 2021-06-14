@@ -3,19 +3,15 @@ import { Component } from 'react';
 import ActivityContainer from './components/ActivityContainer';
 import Header from './components/Header';
 import SearchBar from './components/SearchBar'
-import { Route } from 'react-router-dom'
 import Login from './components/Login'
 import Signup from './components/Signup'
-import {BrowserRouter as Router} from 'react-router-dom'
-
+import {BrowserRouter, Route} from 'react-router-dom'
+// , Switch, Redirect
 
 const activitiesUrl = 'http://localhost:3000/activities'
 const usersUrl = 'http://localhost:3000/users'
 const loginUrl = 'http://localhost:3000/login'
 
-const headers_with_auth = {
-  Authorization: ''
-}
 
 const headers = {
   'Content-Type': 'application/json',
@@ -30,6 +26,9 @@ class App extends Component {
     token: {}
   }
 
+  headers_with_auth = {
+    Authorization: `Bearer ${this.state.token}`
+  }
   componentDidMount() {
     this.getAllActivities();
   }
@@ -74,8 +73,9 @@ class App extends Component {
     .then(response => {
       if(response.token)
       { 
-        this.setState({token: response.token})
-      } else if(response.message) 
+        localStorage.setItem('token', response.token)
+      } 
+      else if(response.message) 
       {
         alert(response.message)
       } else {
@@ -86,19 +86,34 @@ class App extends Component {
 
   render(){
     return (
-      <div className="App">
-        <Header getAllActivities={this.getAllActivities}/> 
-        <SearchBar handleSearch={this.handleSearch}/>
-        <ActivityContainer activities={this.state.activities}/>
-        <Login login={this.login}/>
-        <Signup signUpUser={this.signNewUserUp}/>
-        {/* <Router>
-          <Route path='/login' render={(routerProps) => <Login {...routerProps} />} />
-        </Router> */}
-        {/* <Router>
-          <Route path='/signup' render={(routerProps) => <Signup {...routerProps} />} />
-        </Router> */}
-      </div>
+      <BrowserRouter>
+        <div className="App">
+          <Header getAllActivities={this.getAllActivities}/> 
+          {/* <Switch> */}
+            <Route 
+              path='/login' 
+              component={Login} 
+            />  
+            {/* <Login login={this.login}/> */}
+            {/* (routerProps) => <Login {...routerProps} login={this.login}/> */}
+            
+            {/* <ActivityContainer activities={this.state.activities}/> */}
+            <Route 
+              path='/activities' 
+              render={ () => <ActivityContainer 
+                                activities={this.state.activities} 
+                                handleSearch={this.handleSearch}/>} 
+            />
+            <Route 
+              path='/signup' 
+              render={(routerProps) => <Signup {...routerProps} signUpUser={this.signNewUserUp} />} 
+            />
+            {/* <Signup signUpUser={this.signNewUserUp}/> */}
+          {/* </Switch> */}
+          {/* <Router>
+          </Router> */}
+        </div>
+      </BrowserRouter>
     );
   }
 }

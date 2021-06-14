@@ -124,8 +124,7 @@ class App extends Component {
             />
             <Route 
               path='/login' 
-              render={ (routerProps) => <Login 
-                                          {...routerProps} 
+              render={ (routerProps) => <Login {...routerProps} 
                                           login={this.login}
                                           // isLoggedIn={this.state.isLoggedIn}
                                           handleLogIn={this.handleLogin}/>} 

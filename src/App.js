@@ -1,11 +1,13 @@
 import './App.css';
 import { Component } from 'react';
-import { BrowserRouter, Route } from 'react-router-dom'
+import { BrowserRouter, Route, Redirect } from 'react-router-dom'
 import ActivityContainer from './components/ActivityContainer';
 import Header from './components/Header';
 import Profile from './components/Profile'
 import Login from './components/Login'
+import Logout from './components/Logout'
 import Signup from './components/Signup'
+import Home from './components/Home'
 import AlertMessage from './components/AlertMessage'
 
 const activitiesUrl = 'http://localhost:3000/activities'
@@ -66,6 +68,12 @@ class App extends Component {
       }
     })
   }
+
+  handleLogin = () => {
+    this.setState({isLoggedIn: true})
+  }
+  
+  handleLogout = () => this.setState({isLoggedIn: false})
   
   login = (user) => {
     const currentUser = {
@@ -85,15 +93,16 @@ class App extends Component {
       } 
       else if(response.message) 
       {
-        alert(response.message)
+        this.setState({
+          showError: true,
+          errorMessages: [response.message]
+        })
       } else {
         console.error(response)
       }
     })
   }
 
-  handleLogin = () => this.setState({isLoggedIn: true})
-  handleLogout = () => this.setState({isLoggedIn: false})
 
   handleError = () => {
     this.setState({
@@ -106,40 +115,46 @@ class App extends Component {
     return (
       <BrowserRouter>
         <div className="App">
-          <Header getAllActivities={this.getAllActivities} isLoggedIn={this.state.isLoggedIn}/> 
+          <Header 
+            getAllActivities={this.getAllActivities} 
+            isLoggedIn={this.state.isLoggedIn}/> 
+            <Route 
+              path='/home'
+              render={(routerProps) => <Home {...routerProps} />}
+            />
             <Route 
               path='/login' 
-              render={ 
-                (routerProps) => 
-                <Login 
-                  {...routerProps} 
-                  login={this.login}
-                  isLoggedIn={this.state.isLoggedIn}
-                  handleLogIn={this.handleLogin}
-                />
-              } 
+              render={ (routerProps) => <Login 
+                                          {...routerProps} 
+                                          login={this.login}
+                                          // isLoggedIn={this.state.isLoggedIn}
+                                          handleLogIn={this.handleLogin}/>} 
             />  
             <Route 
               path='/activities' 
               render={ () => <ActivityContainer 
                                 getActivities={this.getAllActivities}
                                 activities={this.state.activities} 
-                                handleSearch={this.handleSearch}
-                              />} 
+                                handleSearch={this.handleSearch}/>} 
             />
             <Route 
               path='/signup' 
-              render={
-                (routerProps) => <Signup {...routerProps} signUpUser={this.signNewUserUp} />
-              } 
+              render={(routerProps) => <Signup {...routerProps} 
+                                        signUpUser={this.signNewUserUp} />} 
             />
             <Route 
               path='/profile' 
-              render={(routerProps) => <Profile {...routerProps} user={this.state.user}  />} 
+              render={(routerProps) => 
+               <Profile {...routerProps} user={this.state.user} />
+                } 
             />
             {this.state.showError 
             ? <AlertMessage error={this.state.errorMessages} hideError={this.handleError}/> 
             : null }
+            <Route 
+              path='/logout'
+              render={(routerProps) => < Logout {...routerProps} logout={this.handleLogout}/>}
+            />
         </div>
       </BrowserRouter>
     );

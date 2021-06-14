@@ -17,6 +17,7 @@ class Login extends Component {
             username: '',
             password: ''
         })
+        this.props.history.push('/profile')
     }
 
     handleInput = (event) => {
@@ -26,7 +27,6 @@ class Login extends Component {
     }
 
     render(){
-        console.log('in login')
         return(
             <div style={{margin: '15px'}}>
                 <Form onSubmit={this.handleSubmit}>
@@ -56,7 +56,7 @@ class Login extends Component {
                     </Button>
                     <p className='forgot-password text-right'> 
                         Don't have an account? 
-                        <Nav.Link href="#signup" to='/signup'>Sign up</Nav.Link>
+                        <Nav.Link href="/signup" to='/signup'>Sign up</Nav.Link>
                     </p>
                 </Form>
             </div>

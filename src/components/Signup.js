@@ -24,6 +24,7 @@ export default class Signup extends Component {
             username: '',
             password: ''
         })
+        this.props.history.push('/profile')
     }
 
     render() {
@@ -65,7 +66,7 @@ export default class Signup extends Component {
                 </Button>
                 <p className='forgot-password text-right'>
                     Already Registered? 
-                    <Nav.Link href="#login" to='/login'>Log in</Nav.Link>
+                    <Nav.Link href="/login" to='/login'>Log in</Nav.Link>
                 </p>
             </Form>
         )

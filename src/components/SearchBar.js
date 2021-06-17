@@ -35,13 +35,15 @@ class SearchBar extends Component{
                         variant="outline-success" 
                         type='submit'
                     >Search</Button>
-                    <Form.Text className='text-muted' style={{marginLeft: '5px'}}>
-                        Remove filter 
+                    {this.state.searchText 
+                    ? <Form.Text className='text-muted' style={{marginLeft: '5px'}}>
+                        Remove search filter 
                         <Button 
                             onClick={this.removeSearchText}
                             variant='outline-light' 
                             size='sm'>x</Button>
                     </Form.Text>
+                    : null}
                 </Form>
             </div>
         )

@@ -12,7 +12,7 @@ function ActivityCard(props) {
                     <Card.Title>{name}</Card.Title>
                     <Card.Subtitle className="mb-2 text-muted">{location}</Card.Subtitle>
                     <Card.Text>
-                        Category: {category}
+                        Category: {category.toLowerCase()}
                     </Card.Text>
                     <Button variant="primary">See More Info</Button>
                 </Card.Body>

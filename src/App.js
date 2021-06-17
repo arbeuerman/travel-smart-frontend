@@ -1,6 +1,7 @@
 import './App.css';
 import { Component } from 'react';
-import { BrowserRouter, Route, Redirect } from 'react-router-dom'
+import { BrowserRouter, Route } from 'react-router-dom'
+// , Redirect
 import ActivityContainer from './components/ActivityContainer';
 import Header from './components/Header';
 import Profile from './components/Profile'
@@ -12,6 +13,7 @@ import AlertMessage from './components/AlertMessage'
 
 const activitiesUrl = 'http://localhost:3000/activities'
 const usersUrl = 'http://localhost:3000/users'
+// const favoritesUrl = 'http://localhost:3000/favorites'
 const loginUrl = 'http://localhost:3000/login'
 
 
@@ -28,22 +30,47 @@ class App extends Component {
     user: {},
     showError: false,
     errorMessages: [],
-    isLoggedIn: false
+    isLoggedIn: false,
+    location: ''
   }
 
   componentDidMount() {
-    this.getAllActivities();
+    // this.getAllActivities();
+    // this.getFavorites();
+    
   }
 
   getAllActivities = () => {
-    fetch(activitiesUrl)
-    .then(res => res.json())
-    .then(activities => this.setState({activities}))
+    console.log('getting all activities is no longer a thing')
+    // fetch(activitiesUrl)
+    // .then(res => res.json())
+    // .then(activities => this.setState({activities}))
   }
 
-  handleSearch = (searchText) => {
-    const filteredActivities = [...this.state.activities].filter(activity => activity.category.includes(searchText))
-    this.setState({activities: filteredActivities})
+  getSelectedActivities = (location) => {
+    fetch(`${activitiesUrl}/${location}`)
+    .then(res => res.json())
+    .then(results => {
+      console.log(results.data)
+      this.setState({activities: results.data, location})
+    })
+  }
+
+  getFavorites = () => {
+    console.log("getting favorites")
+    // if(localStorage.token){
+    //   fetch(favoritesUrl, {
+    //     headers: {
+    //       Authorization: `Bearer ${localStorage.token}`
+    //   }
+    //   })
+    //   .then(res => res.json())
+    //   .then(result => {
+    //     result.error 
+    //     ? this.setState({showError: true, errorMessage: [result.error]})
+    //     : this.handleLogin(); console.log(result)
+    //   })
+    // }
   }
 
   signNewUserUp = (user) => {
@@ -69,12 +96,6 @@ class App extends Component {
     })
   }
 
-  handleLogin = () => {
-    this.setState({isLoggedIn: true})
-  }
-  
-  handleLogout = () => this.setState({isLoggedIn: false})
-  
   login = (user) => {
     const currentUser = {
       user
@@ -103,7 +124,22 @@ class App extends Component {
     })
   }
 
+  updateUser = (user) => {
+    this.setState({user})
+  }
+  
+  handleSearch = (searchText) => {
+    console.log(this.state.activities)
+    this.setState({searchText})
+    // const filteredActivities = [...this.state.activities].filter(activity => activity.tags.includes(searchText))
+    // this.setState({activities: filteredActivities})
+  }
 
+  handleLogin = () => this.setState({isLoggedIn: true})
+  
+  //delete token here
+  handleLogout = () => this.setState({isLoggedIn: false})
+  
   handleError = () => {
     this.setState({
       showError: false,
@@ -120,7 +156,8 @@ class App extends Component {
             isLoggedIn={this.state.isLoggedIn}/> 
             <Route 
               path='/home'
-              render={(routerProps) => <Home {...routerProps} />}
+              render={(routerProps) => 
+              <Home {...routerProps} getSelectedActivities={this.getSelectedActivities}/>}
             />
             <Route 
               path='/login' 
@@ -130,10 +167,14 @@ class App extends Component {
                                           handleLogIn={this.handleLogin}/>} 
             />  
             <Route 
-              path='/activities' 
+              exact path='/activities'
               render={ () => <ActivityContainer 
-                                getActivities={this.getAllActivities}
-                                activities={this.state.activities} 
+                                activities={
+                                  this.state.searchText === '' 
+                                  ? this.state.activities 
+                                  : this.state.activities.filter(activity => activity.tags.includes(this.state.searchText))
+                                } 
+                                location={this.state.location}
                                 handleSearch={this.handleSearch}/>} 
             />
             <Route 
@@ -144,7 +185,9 @@ class App extends Component {
             <Route 
               path='/profile' 
               render={(routerProps) => 
-               <Profile {...routerProps} user={this.state.user} />
+               <Profile {...routerProps} 
+                user={this.state.user}
+                updateUser={this.updateUser} />
                 } 
             />
             {this.state.showError 

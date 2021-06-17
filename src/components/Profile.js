@@ -1,37 +1,46 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
 
-const userUrl = 'http://localhost:3000/users'
+// const userUrl = 'http://localhost:3000/users'
 
 function Profile(props) {
 
-    const [user, setUser] = useState({})
-
     useEffect(() => {
-        // console.log(localStorage.token)
-        //get user id 
-        const user_id = props.user.id
-        const user_id_url = `${userUrl}/${user_id}`
         const headers = {
             Authorization: `Bearer ${localStorage.token}`
-        }
-        fetch(user_id_url, {
-            headers
-        })
-        .then(res => res.json())
-        .then(user => setUser(user))
-      });
+          }
+          
+          if(Object.keys(props.user).length === 0)
+          {
+              fetch('http://localhost:3000/profile', {
+                  headers
+              })
+              .then(res => res.json())
+              .then(result => {
+                if(result.message){
+                  console.log(result.message)
+                } else {
+                  props.updateUser(result)
+                }
+              })
+          }
+      }, [props]);
 
+    const {username, imageUrl, bio} = props.user
+    console.log(props.user)
    return(
     <div style={{margin: '15px'}}>
         <Card className="text-center">
-            <Card.Header>Welcome {user.username}!</Card.Header>
-            <Card.Img variant="bottom" src={user.imageUrl} />
+            <div>
+            <Card.Header>Welcome {username}!</Card.Header>
+            <Button variant="primary">View Favorites</Button>
+            <Button variant="secondary">Edit Profile</Button>
+            </div>
+            <Card.Img variant="bottom" src={imageUrl} />
             <Card.Body>
-                <Card.Title>{user.username}</Card.Title>
-                <Card.Text> Bio: {user.bio}</Card.Text>
-                <Button variant="primary">Go somewhere</Button>
+                <Card.Title>{username}</Card.Title>
+                <Card.Text> Bio: {bio}</Card.Text>
             </Card.Body>
             <Card.Footer className="text-muted">2 days ago</Card.Footer>
         </Card>

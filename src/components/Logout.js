@@ -5,7 +5,7 @@ function Logout(props) {
     useEffect(() => {
         props.logout();
         props.history.push('/home') 
-    })
+    }, [props])
 
     return(
         <div>

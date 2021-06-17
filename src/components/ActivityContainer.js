@@ -1,16 +1,12 @@
 import ActivityCard from "./ActivityCard";
 import CardDeck from "react-bootstrap/CardDeck";
 import SearchBar from "./SearchBar"
-// import {useEffect} from "react"
 
 function ActivityContainer(props) {
 
-    // useEffect( () => {
-    //     props.getActivities();
-    // })
-
     return (
         <div style={{margin: '15px'}}>
+            <h4>Traveling to: {props.location}</h4>
             <SearchBar handleSearch={props.handleSearch}/>
             {/* <h1>All Activities</h1> */}
             <CardDeck>

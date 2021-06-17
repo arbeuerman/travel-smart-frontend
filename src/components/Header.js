@@ -16,7 +16,7 @@ function Header(props) {
                         <Nav.Link 
                             href="activities" 
                             to='/activities' 
-                            onClick={props.getAllActivities}>View All Activities
+                            onClick={props.getAllActivities}>Browse Activities
                         </Nav.Link>
                         
                         { props.isLoggedIn 
@@ -24,7 +24,7 @@ function Header(props) {
                             : <Nav.Link href="login" to='/login'>Login</Nav.Link>}
 
                         { props.isLoggedIn 
-                            ? null
+                            ? <Nav.Link href="profile" to='/profile'>View Profile</Nav.Link>
                             :<Nav.Link href="signup" to='/signup'>Sign Up</Nav.Link> }
                         </Nav>
             

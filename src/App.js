@@ -138,7 +138,10 @@ class App extends Component {
   handleLogin = () => this.setState({isLoggedIn: true})
   
   //delete token here
-  handleLogout = () => this.setState({isLoggedIn: false})
+  handleLogout = () => {
+    this.setState({isLoggedIn: false})
+    localStorage.setItem('token', null)
+  }
   
   handleError = () => {
     this.setState({
@@ -163,19 +166,20 @@ class App extends Component {
               path='/login' 
               render={ (routerProps) => <Login {...routerProps} 
                                           login={this.login}
-                                          // isLoggedIn={this.state.isLoggedIn}
                                           handleLogIn={this.handleLogin}/>} 
             />  
             <Route 
               exact path='/activities'
-              render={ () => <ActivityContainer 
+              render={ (routerProps) => <ActivityContainer 
                                 activities={
                                   this.state.searchText === '' 
                                   ? this.state.activities 
                                   : this.state.activities.filter(activity => activity.tags.includes(this.state.searchText))
                                 } 
+                                {...routerProps}
                                 location={this.state.location}
-                                handleSearch={this.handleSearch}/>} 
+                                handleSearch={this.handleSearch}
+                                getSelectedActivities={this.getSelectedActivities}/>} 
             />
             <Route 
               path='/signup' 

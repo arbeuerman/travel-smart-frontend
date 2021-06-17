@@ -27,11 +27,11 @@ class App extends Component {
   state = {
     activities: [],
     searchText: '',
+    location: '',
     user: {},
     showError: false,
     errorMessages: [],
     isLoggedIn: false,
-    location: ''
   }
 
   componentDidMount() {

@@ -12,7 +12,11 @@ class SearchBar extends Component{
     handleSubmit = (event) => {
         event.preventDefault();
         this.props.handleSearch(this.state.searchText)
+    }
+    
+    removeSearchText = () => {
         this.setState({searchText: ""})
+        this.props.handleSearch("")
     }
 
     render(){
@@ -31,6 +35,13 @@ class SearchBar extends Component{
                         variant="outline-success" 
                         type='submit'
                     >Search</Button>
+                    <Form.Text className='text-muted' style={{marginLeft: '5px'}}>
+                        Remove filter 
+                        <Button 
+                            onClick={this.removeSearchText}
+                            variant='outline-light' 
+                            size='sm'>x</Button>
+                    </Form.Text>
                 </Form>
             </div>
         )

@@ -27,7 +27,8 @@ function ActivityInfo(props) {
                 
             } else {
                 console.log('deleting favorite')
-                updateLikes('DELETE', null, false)
+                const data = {favoritedActivity: props.activity}
+                updateLikes('DELETE', JSON.stringify(data), false)
             }
         } else {
             alert("please log in or sign up to like")
@@ -40,12 +41,14 @@ function ActivityInfo(props) {
             headers,
             body
         })
-        .then(res => res.json())
-        .then(result => {
-            // debugger
-            console.log(result)
+        .then(
             setLike(isLiked)
-        })
+        )
+        // .then(result => {
+        //     debugger
+        //     console.log(result)
+        //     setLike(isLiked)
+        // })
     } 
 
     return (

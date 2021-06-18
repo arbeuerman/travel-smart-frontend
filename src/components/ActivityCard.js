@@ -3,6 +3,13 @@ import Button from 'react-bootstrap/Button'
 
 function ActivityCard(props) {
     const { name, location, imageUrl, category } = props.activity
+
+    const displayActivity = () => {
+        props.displaySingleCard(props.activity)
+    }
+
+    // style={{ width: '18rem' }}
+
     return (
         <div style={{marginBottom: '15px'}}>
             <Card style={{ width: '18rem' }} border='secondary'>
@@ -14,7 +21,7 @@ function ActivityCard(props) {
                     <Card.Text>
                         Category: {category.toLowerCase()}
                     </Card.Text>
-                    <Button variant="primary">See More Info</Button>
+                    <Button variant="primary" onClick={displayActivity}>See More Info</Button>
                 </Card.Body>
             </Card>
         </div>

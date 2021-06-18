@@ -51,7 +51,6 @@ class App extends Component {
     fetch(`${activitiesUrl}/${location}`)
     .then(res => res.json())
     .then(results => {
-      console.log(results.data)
       this.setState({activities: results.data, location})
     })
   }
@@ -83,15 +82,21 @@ class App extends Component {
       body: JSON.stringify(newUser)
     })
     .then(res => res.json())
-    .then(result => {
-      if(result.user)
+    .then(response => {
+      if(response.token)
+      { 
+        localStorage.setItem('token', response.token)
+        this.handleLogin();
+        debugger
+      } 
+      else if(response.message) 
       {
-        console.log(result.user)
-      } else {
         this.setState({
           showError: true,
-          errorMessages: result
+          errorMessages: [response.message]
         })
+      } else {
+        console.error(response)
       }
     })
   }
@@ -129,10 +134,7 @@ class App extends Component {
   }
   
   handleSearch = (searchText) => {
-    console.log(this.state.activities)
     this.setState({searchText})
-    // const filteredActivities = [...this.state.activities].filter(activity => activity.tags.includes(searchText))
-    // this.setState({activities: filteredActivities})
   }
 
   handleLogin = () => this.setState({isLoggedIn: true})

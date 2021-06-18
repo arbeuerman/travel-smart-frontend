@@ -10,7 +10,6 @@ function Profile(props) {
         const headers = {
             Authorization: `Bearer ${localStorage.token}`
           }
-          
           if(Object.keys(props.user).length === 0)
           {
               fetch('http://localhost:3000/profile', {
@@ -28,8 +27,8 @@ function Profile(props) {
       }, [props]);
 
     const {username, imageUrl, bio} = props.user
-    console.log(props.user)
-   return(
+
+    return(
     <div style={{margin: '15px'}}>
         <Card className="text-center">
             <div>

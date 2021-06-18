@@ -24,7 +24,7 @@ export default class Signup extends Component {
             username: '',
             password: ''
         })
-        this.props.history.push('/profile')
+        this.props.history.push('/login')
     }
 
     render() {

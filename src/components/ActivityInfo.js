@@ -1,7 +1,7 @@
 import Card from 'react-bootstrap/Card'
 import CardDeck from 'react-bootstrap/CardDeck'
 import Button from 'react-bootstrap/Button'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const favoritesUrl = 'http://localhost:3000/favorites'
 const headers = {
@@ -14,6 +14,21 @@ function ActivityInfo(props) {
 
     const [like, setLike] = useState(false)
 
+    useEffect(
+        () => {
+            fetch(favoritesUrl, {
+                method: 'GET',
+                headers
+            })
+            .then(res => res.json())
+            .then(favorites => {
+                const names = favorites.map(favorite => favorite.name)
+                names.includes(props.activity.name) ? setLike(true) : setLike(false)
+                }
+            )
+        }, [props]
+    )
+    
     const handleClick = () => {
         
         if(localStorage.token) {

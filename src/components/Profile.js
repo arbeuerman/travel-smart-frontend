@@ -75,16 +75,23 @@ function Profile(props) {
               </Card>
             </Col>
           </Row>
-          <div style={{marginTop: '5px'}}>
+          <Row style={{marginTop: '5px'}}>
+            <Col>
             <Button 
             variant="primary"
             onClick={toggleFavorites}>{showFavorites ? 'Hide Favorites' : 'View Favorites'}</Button> {' '}
             <Button variant="secondary">Edit Profile</Button> {' '}
-          </div>
-          {showFavorites ?
-            <Activities activities={favorites} /> 
-            : null        
-          }
+            </Col>
+          </Row>
+          <hr></hr>
+            <Row>
+              <Col>
+                {showFavorites ?
+                  <Activities activities={favorites} /> 
+                  : null        
+                }
+              </Col>
+            </Row>
         </CardGroup>
       </Container>
     </div>

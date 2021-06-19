@@ -1,4 +1,5 @@
 import Card from 'react-bootstrap/Card'
+import CardDeck from 'react-bootstrap/CardDeck'
 import Button from 'react-bootstrap/Button'
 import { useState } from 'react'
 
@@ -45,27 +46,35 @@ function ActivityInfo(props) {
     } 
 
     return (
-        <div>
-            <Card>
-                <Card.Img variant="top" src={props.activity.imageUrl} alt={`image of ${props.activity.name}`}/>
-                <Card.Body>
-                    <Card.Title>{props.activity.name}</Card.Title>
-                    <Card.Text>
-                    Some quick example text to build on the card title and make up the bulk of
-                    the card's content.
-                    </Card.Text>
-                    <Button 
-                        variant="primary" 
-                        onClick={props.displayAllActivities}> Back to all activities
-                    </Button>
-                
-                    <Button 
-                        variant="outline-danger" 
-                        style={{border: 'none'}}
-                        onClick={handleClick}>{ !like === true ? '♡' : '♥' }
-                    </Button>
-                </Card.Body>
-            </Card>
+        <div style={{marginTop: '5px'}}>
+            <CardDeck>
+                <Card>
+                    <Card.Img 
+                        variant="top" 
+                        src={props.activity.imageUrl} 
+                        alt={`image of ${props.activity.name}`}
+                        />
+                </Card>
+                <Card>
+                    <Card.Body>
+                        <Card.Title>{props.activity.name}</Card.Title>
+                        <Card.Text>
+                        Some quick example text to build on the card title and make up the bulk of
+                        the card's content.
+                        </Card.Text>
+                        <Button 
+                            variant="primary" 
+                            onClick={props.displayAllActivities}> Back to all activities
+                        </Button>
+                    
+                        <Button 
+                            variant="outline-danger" 
+                            style={{border: 'none'}}
+                            onClick={handleClick}>{ !like === true ? '♡' : '♥' }
+                        </Button>
+                    </Card.Body>
+                </Card>
+            </CardDeck>
         </div>
     )
 }

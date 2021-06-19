@@ -1,44 +1,19 @@
-import ActivityCard from "./ActivityCard";
-import CardDeck from "react-bootstrap/CardDeck";
+import Activities from "./Activities";
 import SearchBar from "./SearchBar"
 import FilterBar from "./FilterBar"
-import ActivityInfo from "./ActivityInfo";
-import { useState } from 'react'
 
 function ActivityContainer(props) {
 
-    const [activity, setActivity] = useState({})
-    const [showActivityInfo, setShowActivityInfo] = useState(false)
-
-    const displaySingleCard = (activity) => {
-        // console.log(activity)
-        setShowActivityInfo(true)
-        setActivity(activity)
-        
-    }
-
-    const displayAllActivities = () => {
-        setShowActivityInfo(false)
-    }
-
     return (
         <div style={{margin: '15px'}}>
-            <FilterBar getSelectedActivities={props.getSelectedActivities} />
-            <h5>Traveling to: {props.location ? props.location : 'select a destination'}</h5>
-            <SearchBar handleSearch={props.handleSearch}/>
-            { showActivityInfo 
-                ? <ActivityInfo 
-                    activity={activity} 
-                    location={props.location} 
-                    displayAllActivities={displayAllActivities}/>
-                : <CardDeck>
-                        {props.activities.map(activity => 
-                            <ActivityCard 
-                                key={activity.id} 
-                                activity={activity} 
-                                displaySingleCard={displaySingleCard}
-                            />)}
-                  </CardDeck>}
+            <div style={{display: 'flex'}}>
+                <FilterBar getSelectedActivities={props.getSelectedActivities} />
+                <div style={{marginLeft: '15px'}}>
+                    <h5>Traveling to: {props.location ? props.location : 'please select from dropdown'}</h5>
+                    <SearchBar handleSearch={props.handleSearch}/>
+                </div>
+            </div>
+            <Activities activities={props.activities} />
         </div>
     )
 }

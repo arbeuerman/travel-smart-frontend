@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import Card from 'react-bootstrap/Card'
 import CardGroup from 'react-bootstrap/CardGroup'
-import CardDeck from 'react-bootstrap/CardDeck'
+// import CardDeck from 'react-bootstrap/CardDeck'
 import Button from 'react-bootstrap/Button'
 import Image from 'react-bootstrap/Image'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
-import ActivityCard from './ActivityCard'
-import ActivityInfo from './ActivityInfo'
+import Activities from './Activities'
 
 const favoritesUrl = 'http://localhost:3000/favorites'
 const headers = {
@@ -19,8 +18,6 @@ function Profile(props) {
 
   const [showFavorites, setShowFavorites] = useState(false)
   const [favorites, setFavorites] = useState([])
-  const [activity, setActivity] = useState({})
-  const [showActivityInfo, setShowActivityInfo] = useState(false)
 
   useEffect(() => {
         if(Object.keys(props.user).length === 0)
@@ -57,15 +54,6 @@ function Profile(props) {
     }
   }
 
-  const displaySingleCard = (activity) => {
-    setShowActivityInfo(true)
-    setActivity(activity)
-  }
-
-  const displayAllActivities = () => {
-    setShowActivityInfo(false)
-  }
-
   return(
     <div style={{margin: '15px'}}>
       <Container>
@@ -94,21 +82,7 @@ function Profile(props) {
             <Button variant="secondary">Edit Profile</Button> {' '}
           </div>
           {showFavorites ?
-            (
-              showActivityInfo 
-                ? <ActivityInfo 
-                    activity={activity} 
-                    location={props.location} 
-                    displayAllActivities={displayAllActivities}/>
-                : <CardDeck style={{marginTop: '5px'}} >
-                    {favorites.map(favorite => 
-                      <ActivityCard 
-                          key={favorite.id} 
-                          activity={favorite} 
-                          displaySingleCard={displaySingleCard}
-                      />)}
-                  </CardDeck>
-            )
+            <Activities activities={favorites} /> 
             : null        
           }
         </CardGroup>

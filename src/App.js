@@ -13,9 +13,7 @@ import AlertMessage from './components/AlertMessage'
 
 const activitiesUrl = 'http://localhost:3000/activities'
 const usersUrl = 'http://localhost:3000/users'
-// const favoritesUrl = 'http://localhost:3000/favorites'
 const loginUrl = 'http://localhost:3000/login'
-
 
 const headers = {
   'Content-Type': 'application/json',
@@ -35,16 +33,11 @@ class App extends Component {
   }
 
   componentDidMount() {
-    // this.getAllActivities();
-    // this.getFavorites();
-    
-  }
-
-  getAllActivities = () => {
-    console.log('getting all activities is no longer a thing')
-    // fetch(activitiesUrl)
-    // .then(res => res.json())
-    // .then(activities => this.setState({activities}))
+    if(localStorage.token)
+    {
+      // console.log('token is n')
+      this.handleLogin();
+    }
   }
 
   getSelectedActivities = (location) => {
@@ -53,23 +46,6 @@ class App extends Component {
     .then(results => {
       this.setState({activities: results.data, location})
     })
-  }
-
-  getFavorites = () => {
-    console.log("getting favorites")
-    // if(localStorage.token){
-    //   fetch(favoritesUrl, {
-    //     headers: {
-    //       Authorization: `Bearer ${localStorage.token}`
-    //   }
-    //   })
-    //   .then(res => res.json())
-    //   .then(result => {
-    //     result.error 
-    //     ? this.setState({showError: true, errorMessage: [result.error]})
-    //     : this.handleLogin(); console.log(result)
-    //   })
-    // }
   }
 
   signNewUserUp = (user) => {
@@ -157,7 +133,6 @@ class App extends Component {
       <BrowserRouter>
         <div className="App">
           <Header 
-            getAllActivities={this.getAllActivities} 
             isLoggedIn={this.state.isLoggedIn}/> 
             <Route 
               path='/home'

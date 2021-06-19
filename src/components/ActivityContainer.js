@@ -17,13 +17,20 @@ function ActivityContainer(props) {
         
     }
 
+    const displayAllActivities = () => {
+        setShowActivityInfo(false)
+    }
+
     return (
         <div style={{margin: '15px'}}>
             <FilterBar getSelectedActivities={props.getSelectedActivities} />
             <h5>Traveling to: {props.location ? props.location : 'select a destination'}</h5>
             <SearchBar handleSearch={props.handleSearch}/>
             { showActivityInfo 
-                ? <ActivityInfo activity={activity} location={props.location}/>
+                ? <ActivityInfo 
+                    activity={activity} 
+                    location={props.location} 
+                    displayAllActivities={displayAllActivities}/>
                 : <CardDeck>
                         {props.activities.map(activity => 
                             <ActivityCard 

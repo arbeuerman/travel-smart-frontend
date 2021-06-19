@@ -8,8 +8,6 @@ function ActivityCard(props) {
         props.displaySingleCard(props.activity)
     }
 
-    // style={{ width: '18rem' }}
-
     return (
         <div style={{marginBottom: '15px'}}>
             <Card style={{ width: '18rem' }} border='secondary'>

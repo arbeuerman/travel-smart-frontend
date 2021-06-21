@@ -92,7 +92,14 @@ function Profile(props) {
         console.error(results.message)
         setShowErrors(true)
         setErrorMessages([results.message])
-      } else {
+      } 
+      else if(results.errors) {
+        console.error(results.errors)
+        setShowErrors(true)
+        setErrorMessages([results.errors])
+      }
+      else {
+        debugger
         props.updateUser(results)
       }
     })

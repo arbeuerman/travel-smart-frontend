@@ -89,12 +89,10 @@ function Profile(props) {
     .then(results => {
       if(results.message)
       {
-        console.error(results.message)
         setShowErrors(true)
         setErrorMessages([results.message])
       } 
       else if(results.errors) {
-        console.error(results.errors)
         setShowErrors(true)
         setErrorMessages([results.errors])
       }

@@ -99,7 +99,6 @@ function Profile(props) {
         setErrorMessages([results.errors])
       }
       else {
-        debugger
         props.updateUser(results)
       }
     })

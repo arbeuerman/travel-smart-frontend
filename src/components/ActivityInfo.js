@@ -2,6 +2,7 @@ import Card from 'react-bootstrap/Card'
 import CardDeck from 'react-bootstrap/CardDeck'
 import Button from 'react-bootstrap/Button'
 import { useEffect, useState } from 'react'
+import AlertMessage from './AlertMessage'
 
 const favoritesUrl = 'http://localhost:3000/favorites'
 const headers = {
@@ -13,6 +14,8 @@ const headers = {
 function ActivityInfo(props) {
 
     const [like, setLike] = useState(false)
+    const [errorMessages, setErrorMessages] = useState([])
+    const [showErrors, setShowErrors] = useState(false)
 
     useEffect(
         () => {
@@ -22,16 +25,18 @@ function ActivityInfo(props) {
             })
             .then(res => res.json())
             .then(favorites => {
-                const names = favorites.map(favorite => favorite.name)
-                names.includes(props.activity.name) ? setLike(true) : setLike(false)
+                // console.log(favorites.count)
+                if(favorites.count) {
+                    const names = favorites.map(favorite => favorite.name)
+                    names.includes(props.activity.name) ? setLike(true) : setLike(false)
                 }
-            )
+            })
         }, [props]
     )
     
     const handleClick = () => {
         
-        if(localStorage.token) {
+        if(localStorage.token !== "null") {
             if(like !== true)
             {
                 const data = {
@@ -45,7 +50,8 @@ function ActivityInfo(props) {
                 updateLikes('DELETE', JSON.stringify(data), false)
             }
         } else {
-            alert("please log in or sign up to like")
+            setErrorMessages(["please log in or sign up to like"])
+            setShowErrors(true)
         }
     }
 
@@ -89,6 +95,9 @@ function ActivityInfo(props) {
                         </Button>
                     </Card.Body>
                 </Card>
+                {showErrors
+                    ? <AlertMessage error={errorMessages} hideError={() => setShowErrors(false)}/> 
+                    : null }
             </CardDeck>
         </div>
     )

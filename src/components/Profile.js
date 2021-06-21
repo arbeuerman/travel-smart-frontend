@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import Card from 'react-bootstrap/Card'
 import CardGroup from 'react-bootstrap/CardGroup'
-// import CardDeck from 'react-bootstrap/CardDeck'
 import Button from 'react-bootstrap/Button'
 import Image from 'react-bootstrap/Image'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
+
 import Activities from './Activities'
+import EditUserForm from './EditUserForm'
+import AlertMessage from './AlertMessage'
 
 const favoritesUrl = 'http://localhost:3000/favorites'
 const headers = {
@@ -18,6 +20,9 @@ function Profile(props) {
 
   const [showFavorites, setShowFavorites] = useState(false)
   const [favorites, setFavorites] = useState([])
+  const [showEditForm, setShowEditForm] = useState(false)
+  const [errorMessages, setErrorMessages] = useState([])
+  const [showErrors, setShowErrors] = useState(false)
 
   useEffect(() => {
         if(Object.keys(props.user).length === 0)
@@ -54,6 +59,45 @@ function Profile(props) {
     }
   }
 
+  const toggleEditForm = () => 
+  {
+    if(!showEditForm)
+    {
+      setShowEditForm(true)
+    } else {
+      setShowEditForm(false)
+    }
+  }
+
+  const editProfile = (newUserInfo) => {
+    console.log(newUserInfo)
+    const updatedUser = {
+      user: newUserInfo
+    }
+    console.log(updatedUser)
+    // debugger
+    fetch(`http://localhost:3000/users/${props.user.id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        Authorization: `Bearer ${localStorage.token}`
+      },
+      body: JSON.stringify(updatedUser)
+    })
+    .then(res => res.json())
+    .then(results => {
+      if(results.message)
+      {
+        console.error(results.message)
+        setShowErrors(true)
+        setErrorMessages([results.message])
+      } else {
+        props.updateUser(results)
+      }
+    })
+  }
+
   return(
     <div style={{margin: '15px'}}>
       <Container>
@@ -78,11 +122,29 @@ function Profile(props) {
           <Row style={{marginTop: '5px'}}>
             <Col>
             <Button 
-            variant="primary"
-            onClick={toggleFavorites}>{showFavorites ? 'Hide Favorites' : 'View Favorites'}</Button> {' '}
-            <Button variant="secondary">Edit Profile</Button> {' '}
+              variant="primary"
+              onClick={toggleFavorites}>
+                {showFavorites ? 'Hide Favorites' : 'View Favorites'}
+            </Button> {' '}
+            <Button 
+              variant="secondary"
+              onClick={toggleEditForm}>Edit Profile</Button> {' '}
             </Col>
           </Row>
+          <Row>
+            <Col>
+              {
+                showEditForm 
+                ? <EditUserForm 
+                    editUser={editProfile} 
+                    hideEditForm={() => setShowEditForm(false)}
+                    show={showEditForm}
+                    user={props.user}
+                  /> 
+                : null
+              }
+            </Col>
+          </Row>  
           <hr></hr>
             <Row>
               <Col>
@@ -92,6 +154,9 @@ function Profile(props) {
                 }
               </Col>
             </Row>
+            {showErrors
+            ? <AlertMessage error={errorMessages} hideError={() => setShowErrors(false)}/> 
+            : null }
         </CardGroup>
       </Container>
     </div>

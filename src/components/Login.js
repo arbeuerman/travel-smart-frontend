@@ -17,7 +17,8 @@ class Login extends Component {
             username: '',
             password: ''
         })
-        this.props.handleLogIn();
+        // this.props.handleLogIn();
+        // debugger
         this.props.history.push('/profile')
     }
 

@@ -1,7 +1,6 @@
 import './App.css';
 import { Component } from 'react';
-import { BrowserRouter, Route } from 'react-router-dom'
-// , Redirect
+import { BrowserRouter, Route, Redirect } from 'react-router-dom'
 import ActivityContainer from './components/ActivityContainer';
 import Header from './components/Header';
 import Profile from './components/Profile'
@@ -35,9 +34,17 @@ class App extends Component {
   componentDidMount() {
     if(localStorage.token)
     {
-      // console.log('token is n')
       this.handleLogin();
     }
+    // fetch('http://localhost:3000/profile', {
+    //   headers: {
+    //     Authorization: `Bearer ${localStorage.token}`
+    // }})
+    // .then(res => res.json)
+    // .then(result => {
+    //   console.log(result)
+    //   debugger
+    // })
   }
 
   getSelectedActivities = (location) => {
@@ -63,7 +70,7 @@ class App extends Component {
       { 
         localStorage.setItem('token', response.token)
         this.handleLogin();
-        debugger
+        // debugger
       } 
       else if(response.message) 
       {
@@ -88,10 +95,13 @@ class App extends Component {
     })
     .then(res => res.json())
     .then(response => {
+      console.log(response)
       if(response.token)
       { 
         localStorage.setItem('token', response.token)
         this.handleLogin();
+        // debugger
+        this.updateUser(user)
       } 
       else if(response.message) 
       {
@@ -99,7 +109,9 @@ class App extends Component {
           showError: true,
           errorMessages: [response.message]
         })
+        this.handleLogout();
       } else {
+        this.handleLogout();
         console.error(response)
       }
     })
@@ -113,12 +125,14 @@ class App extends Component {
     this.setState({searchText})
   }
 
-  handleLogin = () => this.setState({isLoggedIn: true})
+  handleLogin = () => {
+      this.setState({isLoggedIn: true})
+  }
   
   //delete token here
   handleLogout = () => {
     this.setState({isLoggedIn: false})
-    localStorage.setItem('token', null)
+    localStorage.removeItem('token')
   }
   
   handleError = () => {
@@ -127,10 +141,6 @@ class App extends Component {
       errorMessages: []
     })
   }
-
-  // updateUser = (updatedUser) => {
-  //   this.setState({user: updatedUser})
-  // }
 
   render(){
     return (
@@ -170,9 +180,9 @@ class App extends Component {
             <Route 
               path='/profile' 
               render={(routerProps) => 
-               <Profile {...routerProps} 
-                user={this.state.user}
-                updateUser={this.updateUser} />
+                <Profile {...routerProps} user={this.state.user} 
+                    updateUser={this.updateUser}
+                    isLoggedIn={this.state.isLoggedIn} /> 
                 } 
             />
             {this.state.showError 
@@ -182,6 +192,7 @@ class App extends Component {
               path='/logout'
               render={(routerProps) => < Logout {...routerProps} logout={this.handleLogout}/>}
             />
+            {/* <Route path='activities/:id' render={ (routerProps) => <ActivityInfo />} />  */}
         </div>
       </BrowserRouter>
     );

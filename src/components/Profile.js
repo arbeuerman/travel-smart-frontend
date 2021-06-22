@@ -12,9 +12,10 @@ import EditUserForm from './EditUserForm'
 import AlertMessage from './AlertMessage'
 
 const favoritesUrl = 'http://localhost:3000/favorites'
-const headers = {
-    Authorization: `Bearer ${localStorage.token}`
-  }
+const getToken = () => localStorage.getItem('token') 
+const headers = () => ({
+    Authorization: `Bearer ${getToken()}`
+  })
 
 function Profile(props) {
 
@@ -27,17 +28,17 @@ function Profile(props) {
   useEffect(() => {
         if(Object.keys(props.user).length === 0)
         {
-            fetch('http://localhost:3000/profile', {
-                headers
-            })
-            .then(res => res.json())
-            .then(result => {
-              if(result.message){
-                console.log(result.message)
-              } else {
-                props.updateUser(result)
-              }
-            })
+          fetch('http://localhost:3000/profile', {
+              headers: headers()
+          })
+          .then(res => res.json())
+          .then(result => {
+            if(result.message){
+              console.log(result.message)
+            } else {
+              props.updateUser(result)
+            }
+          })
         }
     }, [props]);
 
@@ -74,8 +75,6 @@ function Profile(props) {
     const updatedUser = {
       user: newUserInfo
     }
-    console.log(updatedUser)
-    // debugger
     fetch(`http://localhost:3000/users/${props.user.id}`, {
       method: 'PATCH',
       headers: {

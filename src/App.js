@@ -51,7 +51,9 @@ class App extends Component {
     fetch(`${activitiesUrl}/${location}`)
     .then(res => res.json())
     .then(results => {
-      this.setState({activities: results.data, location})
+      console.log(results)
+      // debugger
+      this.setState({activities: results, location})
     })
   }
 

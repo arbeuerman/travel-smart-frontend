@@ -17,9 +17,8 @@ class Login extends Component {
             username: '',
             password: ''
         })
-        // this.props.handleLogIn();
         // debugger
-        this.props.history.push('/profile')
+        // this.props.history.push('/profile')
     }
 
     handleInput = (event) => {

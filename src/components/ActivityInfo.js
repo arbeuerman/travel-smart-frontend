@@ -25,7 +25,6 @@ function ActivityInfo(props) {
             })
             .then(res => res.json())
             .then(favorites => {
-                // console.log(favorites.count)
                 if(favorites.count) {
                     const names = favorites.map(favorite => favorite.name)
                     names.includes(props.activity.name) ? setLike(true) : setLike(false)
@@ -36,7 +35,7 @@ function ActivityInfo(props) {
     
     const handleClick = () => {
         
-        if(localStorage.token !== "null") {
+        if(localStorage.token) {
             if(like !== true)
             {
                 const data = {
@@ -44,7 +43,6 @@ function ActivityInfo(props) {
                     location: props.location,
                 }
                 updateLikes('POST', JSON.stringify(data), true)
-                
             } else {
                 const data = {favoritedActivity: props.activity}
                 updateLikes('DELETE', JSON.stringify(data), false)

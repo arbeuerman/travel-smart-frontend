@@ -32,27 +32,16 @@ class App extends Component {
   }
 
   componentDidMount() {
-    if(localStorage.token)
+    if(localStorage.getItem('token') !== null)
     {
       this.handleLogin();
     }
-    // fetch('http://localhost:3000/profile', {
-    //   headers: {
-    //     Authorization: `Bearer ${localStorage.token}`
-    // }})
-    // .then(res => res.json)
-    // .then(result => {
-    //   console.log(result)
-    //   debugger
-    // })
   }
 
   getSelectedActivities = (location) => {
     fetch(`${activitiesUrl}/${location}`)
     .then(res => res.json())
     .then(results => {
-      console.log(results)
-      // debugger
       this.setState({activities: results, location})
     })
   }
@@ -97,13 +86,12 @@ class App extends Component {
     })
     .then(res => res.json())
     .then(response => {
-      console.log(response)
       if(response.token)
       { 
         localStorage.setItem('token', response.token)
         this.handleLogin();
-        // debugger
         this.updateUser(user)
+        //try to redirect to profile here
       } 
       else if(response.message) 
       {
@@ -113,6 +101,7 @@ class App extends Component {
         })
         this.handleLogout();
       } else {
+        debugger
         this.handleLogout();
         console.error(response)
       }
@@ -182,10 +171,14 @@ class App extends Component {
             <Route 
               path='/profile' 
               render={(routerProps) => 
+                localStorage.getItem('token') === null 
+                ?
+                <Redirect to='/login' />
+                :
                 <Profile {...routerProps} user={this.state.user} 
                     updateUser={this.updateUser}
                     isLoggedIn={this.state.isLoggedIn} /> 
-                } 
+              } 
             />
             {this.state.showError 
             ? <AlertMessage error={this.state.errorMessages} hideError={this.handleError}/> 

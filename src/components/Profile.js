@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Card from 'react-bootstrap/Card'
+import Modal from 'react-bootstrap/Modal'
 import CardGroup from 'react-bootstrap/CardGroup'
 import Button from 'react-bootstrap/Button'
 import Image from 'react-bootstrap/Image'
@@ -24,6 +25,10 @@ function Profile(props) {
   const [showEditForm, setShowEditForm] = useState(false)
   const [errorMessages, setErrorMessages] = useState([])
   const [showErrors, setShowErrors] = useState(false)
+  //modal component for no favorites
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   useEffect(() => {
         if(Object.keys(props.user).length === 0)
@@ -48,16 +53,20 @@ function Profile(props) {
     //show a list of all of the user favorites
     if(!showFavorites){
       fetch(favoritesUrl, {
-        headers
+        headers: headers()
       })
       .then(res => res.json())
       .then(favorites => {
-        setShowFavorites(true)
-        setFavorites(favorites)
+        if (favorites.length > 0) {
+          setShowFavorites(true)
+          setFavorites(favorites)
+        } else {
+          handleShow();
+        }
       })
     } else {
       setShowFavorites(false)
-    }
+    } 
   }
 
   const toggleEditForm = () => 
@@ -151,8 +160,8 @@ function Profile(props) {
           <hr></hr>
             <Row>
               <Col>
-                {showFavorites ?
-                  <Activities activities={favorites} /> 
+                {showFavorites && favorites.length > 0 
+                  ? <Activities activities={favorites} /> 
                   : null        
                 }
               </Col>
@@ -160,6 +169,16 @@ function Profile(props) {
             {showErrors
             ? <AlertMessage error={errorMessages} hideError={() => setShowErrors(false)}/> 
             : null }
+            {
+              <Modal show={show}>  
+                <Modal.Header closeButton onHide={handleClose}>
+                  <Modal.Title>Oh No!</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  You don't have any favorites yet! Please browse activities to select some.
+                </Modal.Body>
+              </Modal>
+            }
         </CardGroup>
       </Container>
     </div>

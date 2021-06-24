@@ -10,8 +10,8 @@ function ActivityCard(props) {
 
     return (
         <div style={{marginBottom: '15px'}}>
-            <Card style={{ width: '18rem', height: '50vw' }} border='secondary'>
-                <Card.Header style={{ height: '18%', wordBreak: 'break-all', whiteSpace: 'normal' }} as='h3'>{name}</Card.Header>
+            <Card style={{ width: '18rem', height: '35vw' }} border='secondary'>
+                <Card.Header style={{ height: '18%', wordWrap: 'normal', }} as='h3'>{name}</Card.Header>
                 <Card.Img style={{ height: '45%' }}  variant="top" src={imageUrl} />
                 <Card.Body>
                     <Card.Title>{name}</Card.Title>

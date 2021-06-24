@@ -8,6 +8,7 @@ export default class Signup extends Component {
     state = {
         username: '',
         password: '',
+        bio: '',
         imageUrl: ''
     }
 
@@ -58,6 +59,16 @@ export default class Signup extends Component {
                         name="imageUrl" 
                         placeholder="Enter an image link" 
                         value={this.state.imageUrl}
+                        onChange={this.handleInput}
+                    />
+                </Form.Group>
+                <Form.Group>
+                    <Form.Label>Bio</Form.Label>
+                    <Form.Control 
+                        type="text" 
+                        name="bio" 
+                        placeholder="Enter a bio" 
+                        value={this.state.bio}
                         onChange={this.handleInput}
                     />
                 </Form.Group>

@@ -164,7 +164,7 @@ function Profile(props) {
             <Row>
               <Col>
                 {showFavorites && favorites.length > 0 
-                  ? <Activities activities={favorites} /> 
+                  ? <Activities activities={favorites} retrieveFavorites={toggleFavorites} fromFavorites={true}/> 
                   : null        
                 }
               </Col>

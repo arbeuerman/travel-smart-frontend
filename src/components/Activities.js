@@ -15,6 +15,11 @@ function Activities(props) {
 
     const displayAllActivities = () => {
         setShowActivityInfo(false)
+        if(props.fromFavorites)
+        {
+            // debugger
+            props.retrieveFavorites();
+        }
     }
 
     return(
@@ -23,7 +28,9 @@ function Activities(props) {
                 ? <ActivityInfo 
                     activity={activity} 
                     location={props.location} 
-                    displayAllActivities={displayAllActivities}/>
+                    displayAllActivities={displayAllActivities}
+                    // {reloadFavorites={props.fromFavorites ? props.retrieveFavorites : null}}
+                    />
                 : <CardDeck>
                         {props.activities.map(activity => 
                             <ActivityCard 

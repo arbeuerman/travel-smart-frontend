@@ -14,7 +14,7 @@ function ActivityContainer(props) {
                 </div>
             </div>
             <div style={{alignSelf: 'center'}}>
-                <Activities activities={props.activities} />
+                <Activities activities={props.activities}/>
             </div>
         </div>
     )

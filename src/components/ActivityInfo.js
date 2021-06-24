@@ -89,7 +89,7 @@ function ActivityInfo(props) {
                         </Card.Text>
                         <Button 
                             variant="primary" 
-                            onClick={props.displayAllActivities}> Back to all activities
+                            onClick={props.displayAllActivities}> Back
                         </Button>
                     
                         <Button 

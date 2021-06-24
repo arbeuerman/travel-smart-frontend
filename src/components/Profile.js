@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+//react bootstrap components
 import Card from 'react-bootstrap/Card'
 import Modal from 'react-bootstrap/Modal'
 import CardGroup from 'react-bootstrap/CardGroup'
@@ -25,12 +26,14 @@ function Profile(props) {
   const [showEditForm, setShowEditForm] = useState(false)
   const [errorMessages, setErrorMessages] = useState([])
   const [showErrors, setShowErrors] = useState(false)
+  
   //modal component for no favorites
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   useEffect(() => {
+    // check to make sure there isn't already a user
     if(Object.keys(props.user).length === 0)
     {
       fetch('http://localhost:3000/profile', {

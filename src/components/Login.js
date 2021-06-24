@@ -1,7 +1,8 @@
+import React, {Component} from 'react'
+//react bootstrap components
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import Nav from 'react-bootstrap/Nav'
-import React, {Component} from 'react'
 
 class Login extends Component {
 
@@ -12,24 +13,20 @@ class Login extends Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-        // this.props.login(this.state)
-        this.setState({
-            username: '',
-            password: ''
-        })
         const currentUser = {
             user: this.state
         }
         const loginUrl = 'http://localhost:3000/login'
-
+        
         const headers = {
-        'Content-Type': 'application/json',
-        Accepts: 'application/json'
+            'Content-Type': 'application/json',
+            Accepts: 'application/json'
         }
+
         fetch(loginUrl, {
-        method: 'POST',
-        headers,
-        body: JSON.stringify(currentUser)
+            method: 'POST',
+            headers,
+            body: JSON.stringify(currentUser)
         })
         .then(res => res.json())
         .then(response => {
@@ -40,18 +37,19 @@ class Login extends Component {
             } 
             else if(response.message) {
                 this.props.displayError(true, response.message)
-                // this.setState({
-                //     showError: true,
-                //     errorMessages: [response.message]
-                // })
                 this.props.handleLogout();
             } else {
                 this.props.handleLogout();
                 console.error(response)
             }
         })
+        //reset the login form
+        this.setState({
+            username: '',
+            password: ''
+        })
     }
-
+        
     handleInput = (event) => {
         this.setState({
             [event.target.name]: event.target.value

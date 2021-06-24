@@ -17,7 +17,6 @@ function Activities(props) {
         setShowActivityInfo(false)
         if(props.fromFavorites)
         {
-            // debugger
             props.retrieveFavorites();
         }
     }
@@ -29,7 +28,6 @@ function Activities(props) {
                     activity={activity} 
                     location={props.location} 
                     displayAllActivities={displayAllActivities}
-                    // {reloadFavorites={props.fromFavorites ? props.retrieveFavorites : null}}
                     />
                 : <CardDeck>
                         {props.activities.map(activity => 

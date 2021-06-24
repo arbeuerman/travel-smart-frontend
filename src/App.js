@@ -1,6 +1,7 @@
 import './App.css';
 import { Component } from 'react';
-import { BrowserRouter, Route, Redirect } from 'react-router-dom'
+import { BrowserRouter, Route } from 'react-router-dom'
+// , Redirect
 import ActivityContainer from './components/ActivityContainer';
 import Header from './components/Header';
 import Profile from './components/Profile'
@@ -12,7 +13,7 @@ import AlertMessage from './components/AlertMessage'
 
 const activitiesUrl = 'http://localhost:3000/activities'
 const usersUrl = 'http://localhost:3000/users'
-const loginUrl = 'http://localhost:3000/login'
+// const loginUrl = 'http://localhost:3000/login'
 
 const headers = {
   'Content-Type': 'application/json',
@@ -76,36 +77,34 @@ class App extends Component {
   }
 
   login = (user) => {
-    const currentUser = {
-      user
-    }
-    fetch(loginUrl, {
-      method: 'POST',
-      headers,
-      body: JSON.stringify(currentUser)
-    })
-    .then(res => res.json())
-    .then(response => {
-      if(response.token)
-      { 
-        localStorage.setItem('token', response.token)
-        this.handleLogin();
-        this.updateUser(user)
-        //try to redirect to profile here
-      } 
-      else if(response.message) 
-      {
-        this.setState({
-          showError: true,
-          errorMessages: [response.message]
-        })
-        this.handleLogout();
-      } else {
-        debugger
-        this.handleLogout();
-        console.error(response)
-      }
-    })
+    // const currentUser = {
+    //   user
+    // }
+    // fetch(loginUrl, {
+    //   method: 'POST',
+    //   headers,
+    //   body: JSON.stringify(currentUser)
+    // })
+    // .then(res => res.json())
+    // .then(response => {
+    //   if(response.token)
+    //   { 
+    //     localStorage.setItem('token', response.token)
+    //     this.handleLogin();
+    //   } 
+    //   else if(response.message) 
+    //   {
+    //     this.setState({
+    //       showError: true,
+    //       errorMessages: [response.message]
+    //     })
+    //     this.handleLogout();
+    //   } else {
+    //     debugger
+    //     this.handleLogout();
+    //     console.error(response)
+    //   }
+    // })
   }
 
   updateUser = (user) => {
@@ -133,6 +132,13 @@ class App extends Component {
     })
   }
 
+  displayError = (display, messages) => {
+    this.setState({
+      showError: display,
+      errorMessages: [messages]
+    })
+  }
+
   render(){
     return (
       <BrowserRouter>
@@ -147,8 +153,10 @@ class App extends Component {
             <Route 
               path='/login' 
               render={ (routerProps) => <Login {...routerProps} 
-                                          login={this.login}
-                                          handleLogIn={this.handleLogin}/>} 
+                                          // login={this.login}
+                                          handleLogin={this.handleLogin}
+                                          handleLogout={this.handleLogout}
+                                          displayError={this.displayError}/>} 
             />  
             <Route 
               exact path='/activities'
@@ -171,10 +179,10 @@ class App extends Component {
             <Route 
               path='/profile' 
               render={(routerProps) => 
-                localStorage.getItem('token') === null 
-                ?
-                <Redirect to='/login' />
-                :
+                // localStorage.getItem('token') === null 
+                // ?
+                // <Redirect to='/login' />
+                // :
                 <Profile {...routerProps} user={this.state.user} 
                     updateUser={this.updateUser}
                     isLoggedIn={this.state.isLoggedIn} /> 

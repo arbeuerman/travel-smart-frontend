@@ -12,13 +12,44 @@ class Login extends Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-        this.props.login(this.state)
+        // this.props.login(this.state)
         this.setState({
             username: '',
             password: ''
         })
-        // debugger
-        // this.props.history.push('/profile')
+        const currentUser = {
+            user: this.state
+        }
+        const loginUrl = 'http://localhost:3000/login'
+
+        const headers = {
+        'Content-Type': 'application/json',
+        Accepts: 'application/json'
+        }
+        fetch(loginUrl, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify(currentUser)
+        })
+        .then(res => res.json())
+        .then(response => {
+            if(response.token){ 
+                localStorage.setItem('token', response.token)
+                this.props.handleLogin();
+                this.props.history.push('/profile')
+            } 
+            else if(response.message) {
+                this.props.displayError(true, response.message)
+                // this.setState({
+                //     showError: true,
+                //     errorMessages: [response.message]
+                // })
+                this.props.handleLogout();
+            } else {
+                this.props.handleLogout();
+                console.error(response)
+            }
+        })
     }
 
     handleInput = (event) => {

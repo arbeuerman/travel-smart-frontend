@@ -31,21 +31,21 @@ function Profile(props) {
   const handleShow = () => setShow(true);
 
   useEffect(() => {
-        if(Object.keys(props.user).length === 0)
-        {
-          fetch('http://localhost:3000/profile', {
-              headers: headers()
-          })
-          .then(res => res.json())
-          .then(result => {
-            if(result.message){
-              console.log(result.message)
-            } else {
-              props.updateUser(result)
-            }
-          })
+    if(Object.keys(props.user).length === 0)
+    {
+      fetch('http://localhost:3000/profile', {
+          headers: headers()
+      })
+      .then(res => res.json())
+      .then(result => {
+        if(result.message){
+          console.log(result.message)
+        } else {
+          props.updateUser(result)
         }
-    }, [props]);
+      })
+    }
+  }, [props]);
 
   const {username, imageUrl, bio, updated_at} = props.user
 

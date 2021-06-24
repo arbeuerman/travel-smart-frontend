@@ -70,7 +70,7 @@ function ActivityInfo(props) {
                 <Card>
                     <Card.Img 
                         variant="top" 
-                        src={props.activity.image} 
+                        src={props.activity.imageUrl} 
                         alt={`image of ${props.activity.name}`}
                         />
                 </Card>

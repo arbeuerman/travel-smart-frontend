@@ -25,7 +25,7 @@ function ActivityInfo(props) {
             })
             .then(res => res.json())
             .then(favorites => {
-                if(favorites.count) {
+                if(favorites.length > 0) {
                     const names = favorites.map(favorite => favorite.name)
                     names.includes(props.activity.name) ? setLike(true) : setLike(false)
                 }

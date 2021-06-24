@@ -78,8 +78,14 @@ function ActivityInfo(props) {
                     <Card.Body>
                         <Card.Title>{props.activity.name}</Card.Title>
                         <Card.Text>
-                        Some quick example text to build on the card title and make up the bulk of
-                        the card's content.
+                            <strong>Related to:</strong>
+                            <ul>
+                                {
+                                    props.activity.category.split(' ').length > 1
+                                    ? props.activity.category.split(' ').map(tag => <li>{tag}</li>)
+                                    : props.activity.tags.map(tag => <li>{tag}</li>)
+                                }
+                            </ul>
                         </Card.Text>
                         <Button 
                             variant="primary" 

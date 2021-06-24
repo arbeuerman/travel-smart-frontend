@@ -32,7 +32,7 @@ class SearchBar extends Component{
                         onChange={(event) => {this.setState({searchText: event.target.value})}}
                     />
                     <Button 
-                        variant="outline-success" 
+                        variant="secondary" 
                         type='submit'
                     >Search</Button>
                     {this.state.searchText 

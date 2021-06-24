@@ -58,8 +58,8 @@ class Login extends Component {
 
     render(){
         return(
-            <div style={{margin: '15px'}}>
-                <Form onSubmit={this.handleSubmit}>
+            <div style={{margin: '15px'}} className = 'bckgrd-image'>
+                <Form onSubmit={this.handleSubmit} style={{margin: '15px'}}>
                     <h3>Log In</h3>
                     <Form.Group>
                         <Form.Label>Username</Form.Label>

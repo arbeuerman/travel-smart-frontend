@@ -8,7 +8,7 @@ function Home(props) {
                 color: 'white', 
                 textAlign: 'center'
                 }} 
-            className='home'
+            className='bckgrd-image'
         >
             <h4>Welcome to Travel Smart!</h4>
             <p><h6>The premier app for planning your next trip</h6></p>

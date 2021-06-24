@@ -11,7 +11,7 @@ function FilterBar(props) {
         <div style={{marginBottom: '15px'}}>
             <h5>Where would you like to travel?</h5>
             <DropdownButton 
-                variant="success" 
+                variant="secondary" 
                 id="dropdown-basic"
                 title="Select a location" 
                 onSelect={handleSelection}>

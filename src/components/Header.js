@@ -3,7 +3,7 @@ import Nav from 'react-bootstrap/Nav'
 
 function Header(props) {
     return (
-        <div>
+        <div style={{backgroundColor: '#80a7d2', margin: '15px'}}>
             <Navbar>
                 <Navbar.Brand href="/home" to='/home'>Travel Smart</Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />

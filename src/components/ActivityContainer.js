@@ -6,14 +6,16 @@ function ActivityContainer(props) {
 
     return (
         <div style={{margin: '15px'}}>
-            <div style={{display: 'flex'}}>
+            <div style={{display: 'flex', margin: '15px'}}>
                 <FilterBar getSelectedActivities={props.getSelectedActivities} />
                 <div style={{marginLeft: '15px'}}>
                     <h5>Traveling to: {props.location ? props.location : 'please select from dropdown'}</h5>
                     <SearchBar handleSearch={props.handleSearch}/>
                 </div>
             </div>
-            <Activities activities={props.activities} />
+            <div style={{alignSelf: 'center'}}>
+                <Activities activities={props.activities} />
+            </div>
         </div>
     )
 }

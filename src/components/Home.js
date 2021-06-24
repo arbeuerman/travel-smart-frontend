@@ -11,7 +11,7 @@ function Home(props) {
             className='bckgrd-image'
         >
             <h4>Welcome to Travel Smart!</h4>
-            <p><h6>The premier app for planning your next trip</h6></p>
+            <h6>The premier app for planning your next trip</h6>
             {
                 props.isLoggedIn 
                 ? <Button><Nav.Link style={{color: 'white'}} href="activities" to='/activities'>Start browsing </Nav.Link></Button>

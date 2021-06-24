@@ -121,7 +121,7 @@ function Profile(props) {
             <Col>
               <Card>
                 <Card.Header>Welcome {username}!</Card.Header>
-                <Image src={imageUrl} thumbnail/>  
+                <Image src={imageUrl} thumbnail style={{maxHeight: '75vh'}}/>  
               </Card>
             </Col>
             <Col>

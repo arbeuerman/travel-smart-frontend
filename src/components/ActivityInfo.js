@@ -5,11 +5,7 @@ import { useEffect, useState } from 'react'
 import AlertMessage from './AlertMessage'
 
 const favoritesUrl = 'http://localhost:3000/favorites'
-const headers = {
-    'Content-Type': 'application/json',
-    Accepts: 'application/json',
-    Authorization: `Bearer ${localStorage.token}`
-  }
+
 
 function ActivityInfo(props) {
 
@@ -19,6 +15,11 @@ function ActivityInfo(props) {
 
     useEffect(
         () => {
+            const headers = {
+                'Content-Type': 'application/json',
+                Accepts: 'application/json',
+                Authorization: `Bearer ${localStorage.token}`
+            }
             fetch(favoritesUrl, {
                 method: 'GET',
                 headers
@@ -54,6 +55,11 @@ function ActivityInfo(props) {
     }
 
     const updateLikes = (method, body, isLiked) => {
+        const headers = {
+            'Content-Type': 'application/json',
+            Accepts: 'application/json',
+            Authorization: `Bearer ${localStorage.token}`
+          }
         fetch(favoritesUrl, {
             method,
             headers,

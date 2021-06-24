@@ -5,7 +5,12 @@ import { useEffect, useState } from 'react'
 import AlertMessage from './AlertMessage'
 
 const favoritesUrl = 'http://localhost:3000/favorites'
-
+const getToken = () => localStorage.getItem('token') 
+const headers = () => ({
+    'Content-Type': 'application/json',
+    Accepts: 'application/json',
+    Authorization: `Bearer ${getToken()}`
+  })
 
 function ActivityInfo(props) {
 
@@ -15,14 +20,10 @@ function ActivityInfo(props) {
 
     useEffect(
         () => {
-            const headers = {
-                'Content-Type': 'application/json',
-                Accepts: 'application/json',
-                Authorization: `Bearer ${localStorage.token}`
-            }
+
             fetch(favoritesUrl, {
                 method: 'GET',
-                headers
+                headers: headers()
             })
             .then(res => res.json())
             .then(favorites => {
@@ -55,14 +56,9 @@ function ActivityInfo(props) {
     }
 
     const updateLikes = (method, body, isLiked) => {
-        const headers = {
-            'Content-Type': 'application/json',
-            Accepts: 'application/json',
-            Authorization: `Bearer ${localStorage.token}`
-          }
         fetch(favoritesUrl, {
             method,
-            headers,
+            headers: headers(),
             body
         })
         .then(

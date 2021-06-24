@@ -115,7 +115,9 @@ class App extends Component {
             <Route 
               path='/home'
               render={(routerProps) => 
-              <Home {...routerProps} getSelectedActivities={this.getSelectedActivities}/>}
+              <Home {...routerProps} 
+                getSelectedActivities={this.getSelectedActivities}
+                isLoggedIn={this.state.isLoggedIn}/>}
             />
             <Route 
               path='/login' 

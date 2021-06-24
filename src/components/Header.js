@@ -5,7 +5,7 @@ function Header(props) {
     return (
         <div>
             <Navbar>
-                <Navbar.Brand href="#home">Travel Smart</Navbar.Brand>
+                <Navbar.Brand href="/home" to='/home'>Travel Smart</Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="mr-auto">
